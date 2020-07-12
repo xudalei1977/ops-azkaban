@@ -1,0 +1,36 @@
+server:
+  port: 8094
+  tomcat:
+    remote_ip_header: x-forwarded-for
+    protocol_header: x-forwarded-proto
+    port-header: X-Forwarded-Port
+  forward-headers-strategy: native
+  servlet:
+    context-path: /Azkaban
+
+spring:
+  datasource:
+    management:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://common-1:3306/persona?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true
+      username: origin_user
+      password: '!qaz2wsx'
+      # 使用druid数据源
+      type: com.alibaba.druid.pool.DruidDataSource
+      filters: stat
+      maxActive: 20
+      initialSize: 1
+      maxWait: 86400
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+
+logging: #配置日志文件路径
+  level:
+    com.leiyu.ops.hessian.mapper: debug

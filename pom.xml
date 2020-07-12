@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<project
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+        xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.leiyu.ops</groupId>
+        <artifactId>ops-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>ops-azkaban</artifactId>
+    <version>1.0.0</version>
+    <name>ops-azkaban</name>
+    <url>https://github.com/xudalei1977/ops-azkaban.git</url>
+
+    <dependencies>
+        <!-- MySQL database driver -->
+        <!-- Note: It can be OK for compilation without the dependency, but it will fail for runtime! -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!-- Alibaba Druid connection pool -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- Mybatis3 integration with SpringBoot Starter -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.leiyu.ops</groupId>
+            <artifactId>ops-common</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.leiyu.ops.azkaban.Application</mainClass>
+                    <includeSystemScope>true</includeSystemScope>
+                    <profiles>
+                        <profile>dev</profile>
+                        <profile>prod</profile>
+                    </profiles>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

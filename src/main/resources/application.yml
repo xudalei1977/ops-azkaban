@@ -1,0 +1,32 @@
+server:
+  port: 8094
+  servlet:
+    context-path: /Azkaban
+
+#pagehelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+spring:
+  profiles:
+    active: #springActive#
+
+#file path配置
+systemadmin:
+  clusterName: ops-es
+  inetAddress: common-1
+  port: 9300
+
+# page file config
+# url 内网具体的ip，不可以换成host
+file:
+  server:
+    local:
+      #path: /mnt/data1/LavaHEAT/lavaheat-systemadmin/file/
+      path: /originplus/backend/ops-systemadmin/file/
+    url:
+      upload: http://10.128.0.3:8086/SystemAdmin/theme/upload
+      download: http://10.128.0.3:8086/SystemAdmin/theme/img

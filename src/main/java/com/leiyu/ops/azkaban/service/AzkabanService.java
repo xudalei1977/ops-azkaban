@@ -93,19 +93,19 @@ public class AzkabanService {
     }
 
     /**
-     * Start Azkaban flow with given params
+     * Start Azkaban flowName with given params
      *
-     * @param project
-     * @param flow
+     * @param projectName
+     * @param flowName
      */
-    public GeneralResult startAzkabanFlow(String project, String flow, Map<String, Object> paramMap) {
+    public GeneralResult startAzkabanFlow(String projectName, String flowName, Map<String, Object> paramMap) {
 
         GeneralResult generalResult = new GeneralResult();
 
         AzkabanExecuteFlowRequest request = new AzkabanExecuteFlowRequest();
         request.setFlowOverride(paramMap);
-        request.setProject(project);
-        request.setFlow(flow);
+        request.setProject(projectName);
+        request.setFlow(flowName);
         request.setSessionId(login());
         request.setConcurrentOption("ignore");
 

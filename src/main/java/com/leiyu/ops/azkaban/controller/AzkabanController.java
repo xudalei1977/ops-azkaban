@@ -24,36 +24,41 @@ public class AzkabanController {
     private AzkabanService azkabanService;
 
     /**
-     * Call Azkaban to start flow
+     * Call Azkaban to start flowName
      *
-     * @param project
-     * @param flow
+     * @param projectName
+     * @param flowName
      * @param paramMap
      * @return an instance of GeneralResult
      */
 	@PostMapping("/start-azkaban")
-	public GeneralResult startAzkabanFlow(@RequestParam String project, @RequestParam String flow,
-										@RequestParam Map<String, Object> paramMap) {
-        log.info("AzkabanController:: startAzkabanFlow(): started, project={}, flow={}, paramMap={}",
-                project, flow, paramMap);
+	public GeneralResult startAzkabanFlow(@RequestParam String projectName,
+                                          @RequestParam String flowName,
+                                          @RequestParam Map<String, Object> paramMap) {
+        log.info("AzkabanController:: startAzkabanFlow(): started, " +
+                        "projectName={}, flowName={}, paramMap={}",
+                projectName, flowName, paramMap);
 
 		GeneralResult result = new GeneralResult();
 
 		try {
-			result = azkabanService.startAzkabanFlow(project, flow, paramMap);
+			result = azkabanService.startAzkabanFlow(projectName, flowName, paramMap);
 			result.success();
 		} catch (_400CommonException e1) {
-			log.error("AzkabanController:: startAzkabanFlow(): failed, project={}, flow={}, paramMap={}, exception={}",
-                    project, flow, paramMap, e1.getMessage());
+			log.error("AzkabanController:: startAzkabanFlow(): failed, " +
+							"projectName={}, flowName={}, paramMap={}, exception={}",
+                    projectName, flowName, paramMap, e1.getMessage());
 			result.error(new _400CommonException(e1.getMessage()));
 		} catch (Exception e) {
-			log.error("AzkabanController:: startAzkabanFlow(): failed, project={}, flow={}, paramMap={}, exception={}",
-                    project, flow, paramMap, e.getMessage());
+			log.error("AzkabanController:: startAzkabanFlow(): failed, " +
+                            "projectName={}, flowName={}, paramMap={}, exception={}",
+                    projectName, flowName, paramMap, e.getMessage());
 			result.error(new _500CommonException(e.getMessage()));
 		}
 
-        log.info("AzkabanController:: startAzkabanFlow(): ended, project={}, flow={}, paramMap={}, result={}",
-                project, flow, paramMap, result);
+        log.info("AzkabanController:: startAzkabanFlow(): ended, " +
+                        "projectName={}, flowName={}, paramMap={}, result={}",
+                projectName, flowName, paramMap, result);
 		return result;
 	}
 

@@ -30,3 +30,24 @@ file:
     url:
       upload: http://10.128.0.3:8086/SystemAdmin/theme/upload
       download: http://10.128.0.3:8086/SystemAdmin/theme/img
+
+persona:
+  crowdUpLoad: /orginplus/backend/ops-persona/file/crowd_upload/
+  crowdUpLoadSeqName: CROWD_UPLOAD
+  crowdEnLargeSeqName: CROWD_ENLARGE
+  basicTagSeqName: BASIC_TAG
+  systemTagSeqName: SYSTEM_TAG
+  projectName: Persona
+  flowName: update
+
+  dmpDataFileOutPutPath: /orginplus/backend/ops-persona/file/download/
+  urlFileDownload: /File/persona/downloadById/
+  dmpSeedCrowdPath: /data1/ops-persona/seed_crowd_profile/
+  dmpSeedCrowdLavaIdPath: /data1/ops-persona/seed_crowd_id/
+
+  krbAuthenUser: origin_user/cdh-master.asia-east1-b.c.uplifted-agency-234209.internal@LEIYU.COM
+  krbAuthenKeytab: /home/origin_user/origin_user.keytab
+  krbConfPath: /etc/krb5.conf
+
+  hdfsUri: hdfs://nameservice1:8020
+  hdfsUploadPath: /user/origin_user/persona/upload/

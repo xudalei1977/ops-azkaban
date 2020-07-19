@@ -2,6 +2,7 @@ package com.leiyu.ops.azkaban.service;
 
 import com.leiyu.ops.azkaban.entity.ProcessFlow;
 import com.leiyu.ops.azkaban.mapper.ProcessFlowMapper;
+import com.leiyu.ops.common.constant.Constant;
 import com.leiyu.ops.common.entity.GeneralResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,9 +91,9 @@ public class ProcessFlowService {
 
         GeneralResult generalResult = new GeneralResult();
 
-        String groupId = processFlowMapper.queryBatchNoByCrowdId(crowdId);
+        String batchNo = processFlowMapper.queryBatchNoByCrowdId(crowdId);
 
-        generalResult.success(groupId);
+        generalResult.success(Constant.OPERATE_SUCCESS, batchNo);
 
         return generalResult;
     }

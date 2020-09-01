@@ -15,19 +15,19 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class AzkabanConfig {
 
-    @Value("${monitor.azkaban.username}")
+    @Value("${azkaban.username}")
     private String azkUsername;
 
-    @Value("${monitor.azkaban.password}")
+    @Value("${azkaban.password}")
     private String azkPassword;
 
-    @Value("${monitor.azkaban.url}")
+    @Value("${azkaban.url}")
     private String azkUrl;
 
-    @Value("${monitor.azkaban.connectTimeout}")
+    @Value("${azkaban.connectTimeout}")
     private int connectTimeout;
 
-    @Value("${monitor.azkaban.readTimeout}")
+    @Value("${azkaban.readTimeout}")
     private int readTimeout;
 
     @Bean

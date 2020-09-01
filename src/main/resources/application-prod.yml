@@ -29,3 +29,11 @@ logging: #配置日志文件路径
 mybatis-plus:
    mapper-location: classpath*:mapper/**Mapper.xml
    type-aliases-package: com.leiyu.ops.azkaban.entity
+
+# azkaban登录信息
+azkaban:
+   username: azkaban
+   password: azkaban
+   url: http://common-1:8087
+   connectTimeout: 60000
+   readTimeout: 120000

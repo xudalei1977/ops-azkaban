@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds" debug="false">
+    <!-- ========================= OPS GLOBAL BEGIN ====================== -->
+    <!-- ops logger definition for global environment here -->
+    <include resource="ops-environment.xml"/>
+
+    <!--
+         ops root logger, the configuration file name is the same
+         as log file with different file extension only.
+     -->
+    <include resource="ops-azkaban.xml"/>
+    <!-- ========================= OPS GLOBAL END ====================== -->
+</configuration>

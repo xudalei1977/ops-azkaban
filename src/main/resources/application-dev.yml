@@ -1,36 +1,44 @@
 server:
-  port: 8094
   tomcat:
     remote_ip_header: x-forwarded-for
     protocol_header: x-forwarded-proto
     port-header: X-Forwarded-Port
   forward-headers-strategy: native
-  servlet:
-    context-path: /Azkaban
 
 spring:
   datasource:
-    management:
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://common-1:3306/persona?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true
-      username: origin_user
-      password: '!qaz2wsx'
-      # 使用druid数据源
-      type: com.alibaba.druid.pool.DruidDataSource
-      filters: stat
-      maxActive: 20
-      initialSize: 1
-      maxWait: 86400
-      minIdle: 1
-      timeBetweenEvictionRunsMillis: 60000
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: select 'x'
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      poolPreparedStatements: true
-      maxOpenPreparedStatements: 20
+    url: jdbc:mysql://localhost:3306/persona?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 'Root123456'
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 86400
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+mybatis-plus:
+  mapper-location: classpath*:mapper/**Mapper.xml
+  type-aliases-package: com.leiyu.ops.azkaban.entity
+
+# azkaban登录信息
+azkaban:
+  username: azkaban
+  password: azkaban
+  url: http://common-1:8087
+  connectTimeout: 60000
+  readTimeout: 120000
 
 logging: #配置日志文件路径
   level:
-    com.leiyu.ops.hessian.mapper: debug
+    com.leiyu.ops.azkaban.mapper: debug

@@ -25,7 +25,6 @@ systemadmin:
 file:
   server:
     local:
-      #path: /mnt/data1/LavaHEAT/lavaheat-systemadmin/file/
       path: /originplus/backend/ops-systemadmin/file/
     url:
       upload: http://10.128.0.3:8086/SystemAdmin/theme/upload

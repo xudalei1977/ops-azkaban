@@ -27,17 +27,16 @@ public class ProcessFlowController {
     /**
      * Save a new Azkaban process flow
      *
-     * @param batchNo
-	 * @param groupId
-	 * @param masterAccountCode
-	 * @param tenantName
+     * @param processFlow
      * @return an instance of GeneralResult
      */
 	@PostMapping("/add")
-	public GeneralResult saveProcessFlow(@RequestParam String batchNo,
-										 @RequestParam Integer groupId,
-										 @RequestParam String masterAccountCode,
-										 @RequestParam String tenantName) {
+	public GeneralResult saveProcessFlow(@RequestBody ProcessFlow processFlow) {
+        String batchNo = processFlow.getBatchNo();
+        Integer groupId = processFlow.getCrowdId();
+        String masterAccountCode = processFlow.getMasterAccountCode();
+        String tenantName = processFlow.getTenantName();
+
         log.info("ProcessFlowController:: saveProcessFlow(): started, " +
 						"batchNo={}, groupId={}, masterAccountCode={}, tenantName={}",
 				batchNo, groupId, masterAccountCode, tenantName);
@@ -45,15 +44,15 @@ public class ProcessFlowController {
 		GeneralResult result = new GeneralResult();
 
 		try {
-			ProcessFlow processFlow = new ProcessFlow();
+			//ProcessFlow processFlow = new ProcessFlow();
 
-			processFlow.setCrowdId(groupId);
-			processFlow.setBatchNo(batchNo);
+			//processFlow.setCrowdId(groupId);
+			//processFlow.setBatchNo(batchNo);
             processFlow.setStatus(PersonaPropertiesHelper.calcStatus);
 			processFlow.setUserProfileStatus(PersonaPropertiesHelper.calcStatus);
 			processFlow.setFileName(batchNo+ ".txt");
-			processFlow.setMasterAccountCode(masterAccountCode);
-			processFlow.setTenantName(tenantName);
+			//processFlow.setMasterAccountCode(masterAccountCode);
+			//processFlow.setTenantName(tenantName);
 
 			result = processFlowService.saveProcessFlow(processFlow);
 			result.success();
@@ -78,11 +77,13 @@ public class ProcessFlowController {
 	/**
 	 * Delete Azkaban process flow by given group id
 	 *
-	 * @param groupId
+	 * @param processFlow
 	 * @return an instance of GeneralResult
 	 */
 	@PostMapping("/delete")
-	public GeneralResult deleteByGroupId(@RequestParam Integer groupId) {
+	public GeneralResult deleteByGroupId(@RequestBody ProcessFlow processFlow) {
+        Integer groupId = processFlow.getCrowdId();
+
 		log.info("ProcessFlowController:: deleteByGroupId(): started, " +
                 "groupId={}", groupId);
 
@@ -112,15 +113,15 @@ public class ProcessFlowController {
 	/**
 	 * Update status of Azkaban process flow by given batch no
 	 *
-	 * @param batchNo
-     * @param status
-     * @param userProfileStatus
+	 * @param processFlow
 	 * @return an instance of GeneralResult
 	 */
 	@PostMapping("/update-status-by-batch-no")
-	public GeneralResult updateStatusByBatchNo(@RequestParam String batchNo,
-                                               @RequestParam Integer status,
-                                               @RequestParam Integer userProfileStatus) {
+	public GeneralResult updateStatusByBatchNo(@RequestBody ProcessFlow processFlow) {
+        String batchNo = processFlow.getBatchNo();
+        Integer status = processFlow.getStatus();
+        Integer userProfileStatus = processFlow.getUserProfileStatus();
+
 		log.info("ProcessFlowController:: updateStatusByBatchNo(): started, " +
                         "batchNo={}, status={}, userProfileStatus={}",
                 batchNo, status, userProfileStatus);
@@ -128,11 +129,11 @@ public class ProcessFlowController {
 		GeneralResult result = new GeneralResult();
 
 		try {
-            ProcessFlow processFlow = new ProcessFlow();
+            //ProcessFlow processFlow = new ProcessFlow();
 
-            processFlow.setBatchNo(batchNo);
-            processFlow.setStatus(status);
-            processFlow.setUserProfileStatus(userProfileStatus);
+            //processFlow.setBatchNo(batchNo);
+            //processFlow.setStatus(status);
+            //processFlow.setUserProfileStatus(userProfileStatus);
 
 			result = processFlowService.updateStatusByBatchNo(processFlow);
 			result.success();
@@ -157,15 +158,15 @@ public class ProcessFlowController {
 	/**
 	 * Update status of Azkaban process flow by given group id
 	 *
-	 * @param groupId
-     * @param status
-     * @param userProfileStatus
+	 * @param processFlow
 	 * @return an instance of GeneralResult
 	 */
 	@PostMapping("/update-status-by-group-id")
-	public GeneralResult updateStatusByGoupId(@RequestParam Integer groupId,
-                                              @RequestParam Integer status,
-                                              @RequestParam Integer userProfileStatus) {
+	public GeneralResult updateStatusByGoupId(@RequestBody ProcessFlow processFlow) {
+        Integer groupId = processFlow.getCrowdId();
+        Integer status = processFlow.getStatus();
+        Integer userProfileStatus = processFlow.getUserProfileStatus();
+
 		log.info("ProcessFlowController:: updateStatusByGoupId(): started, " +
                         "groupId={}, status={}, userProfileStatus={}",
                 groupId, status, userProfileStatus);
@@ -173,11 +174,11 @@ public class ProcessFlowController {
 		GeneralResult result = new GeneralResult();
 
 		try {
-            ProcessFlow processFlow = new ProcessFlow();
+            //ProcessFlow processFlow = new ProcessFlow();
 
-            processFlow.setCrowdId(groupId);
-            processFlow.setStatus(PersonaPropertiesHelper.delStatus);
-            processFlow.setUserProfileStatus(PersonaPropertiesHelper.delStatus);
+            //processFlow.setCrowdId(groupId);
+            //processFlow.setStatus(PersonaPropertiesHelper.delStatus);
+            //processFlow.setUserProfileStatus(PersonaPropertiesHelper.delStatus);
 
 			result = processFlowService.updateStatusByCrowId(processFlow);
 			result.success();
@@ -205,8 +206,8 @@ public class ProcessFlowController {
      * @param groupId
      * @return an instance of GeneralResult
      */
-    @PostMapping("/query-batch-no-by-group-id")
-    public GeneralResult queryBatchNoByCrowdId(@RequestParam Integer groupId) {
+    @GetMapping("/query-batch-no-by-group-id")
+    public GeneralResult queryBatchNoByCrowdId(@RequestParam(name = "crowdId") Integer groupId) {
         log.info("ProcessFlowController:: queryBatchNoByCrowdId(): started, " +
                 "groupId={}", groupId);
 

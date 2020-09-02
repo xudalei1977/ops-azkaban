@@ -1,6 +1,7 @@
 package com.leiyu.ops.azkaban.controller;
 
 import com.leiyu.ops.azkaban.service.AzkabanService;
+import com.leiyu.ops.azkaban.vo.AzkabanVO;
 import com.leiyu.ops.common.entity.GeneralResult;
 import com.leiyu.ops.common.exception.*;
 import lombok.extern.slf4j.Slf4j;
@@ -26,15 +27,15 @@ public class AzkabanController {
     /**
      * Call Azkaban to start flowName
      *
-     * @param projectName
-     * @param flowName
-     * @param paramMap
+     * @param azkabanVO
      * @return an instance of GeneralResult
      */
 	@PostMapping("/start-azkaban")
-	public GeneralResult startAzkabanFlow(@RequestParam String projectName,
-                                          @RequestParam String flowName,
-                                          @RequestParam Map<String, Object> paramMap) {
+	public GeneralResult startAzkabanFlow(@RequestBody AzkabanVO azkabanVO) {
+		String projectName = azkabanVO.getProjectName();
+		String flowName = azkabanVO.getFlowName();
+		Map<String, Object> paramMap = azkabanVO.getParamMap();
+
         log.info("AzkabanController:: startAzkabanFlow(): started, " +
                         "projectName={}, flowName={}, paramMap={}",
                 projectName, flowName, paramMap);

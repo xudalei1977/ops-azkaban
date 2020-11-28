@@ -20,7 +20,11 @@ import java.util.Map;
 @RequestMapping("/azkaban")
 @Slf4j
 public class AzkabanController {
-    
+
+    private static final String EXECUTE_MODE_ONCE = "once";
+
+    private static final String EXECUTE_MODE_CRON = "cron";
+
 	@Autowired
     private AzkabanService azkabanService;
 
@@ -36,28 +40,34 @@ public class AzkabanController {
 		String flowName = azkabanVO.getFlowName();
 		Map<String, Object> paramMap = azkabanVO.getParamMap();
 
-        log.info("AzkabanController:: startAzkabanFlow(): started, " +
+        log.info("AzkabanController:: executeAzkabanFlow(): started, " +
                         "projectName={}, flowName={}, paramMap={}",
                 projectName, flowName, paramMap);
 
 		GeneralResult result = new GeneralResult();
 
 		try {
-			result = azkabanService.startAzkabanFlow(projectName, flowName, paramMap);
+			String exeuteMode = (String) paramMap.get("executeMode");
+            if (EXECUTE_MODE_ONCE.equalsIgnoreCase(exeuteMode)) {
+                result = azkabanService.executeAzkabanFlow(projectName, flowName, paramMap);
+            } else {
+                String cron = (String) paramMap.get("cron");
+                result = azkabanService.scheduleAzkabanCronFlow(projectName, flowName, cron);
+            }
 			result.success();
 		} catch (_400CommonException e1) {
-			log.error("AzkabanController:: startAzkabanFlow(): failed, " +
+			log.error("AzkabanController:: executeAzkabanFlow(): failed, " +
 							"projectName={}, flowName={}, paramMap={}, exception={}",
                     projectName, flowName, paramMap, e1.getMessage());
 			result.error(new _400CommonException(e1.getMessage()));
 		} catch (Exception e) {
-			log.error("AzkabanController:: startAzkabanFlow(): failed, " +
+			log.error("AzkabanController:: executeAzkabanFlow(): failed, " +
                             "projectName={}, flowName={}, paramMap={}, exception={}",
                     projectName, flowName, paramMap, e.getMessage());
 			result.error(new _500CommonException(e.getMessage()));
 		}
 
-        log.info("AzkabanController:: startAzkabanFlow(): ended, " +
+        log.info("AzkabanController:: executeAzkabanFlow(): ended, " +
                         "projectName={}, flowName={}, paramMap={}, result={}",
                 projectName, flowName, paramMap, result);
 		return result;

@@ -1,6 +1,8 @@
 package com.leiyu.ops.azkaban.entity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.codec.net.URLCodec;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
@@ -17,6 +19,8 @@ import java.util.Map;
  * @auther Pitt
  * @date 2020-03-14
  */
+@Getter
+@Setter
 public class AzkabanExecuteFlowRequest {
 
     private String ajax = "executeFlow";
@@ -38,7 +42,7 @@ public class AzkabanExecuteFlowRequest {
         List<BasicNameValuePair> pairs = new ArrayList();
         pairs.add(new BasicNameValuePair("ajax", this.ajax));
         pairs.add(new BasicNameValuePair("session.id", this.sessionId));
-        pairs.add(new BasicNameValuePair("project", this.project));
+        pairs.add(new BasicNameValuePair("projectName", this.project));
         pairs.add(new BasicNameValuePair("flow", this.flow));
 
         if (this.disabled != null && this.disabled.length > 0) {
@@ -100,115 +104,4 @@ public class AzkabanExecuteFlowRequest {
         }
     }
 
-    public String getAjax() {
-        return ajax;
-    }
-
-    public void setAjax(String ajax) {
-        this.ajax = ajax;
-    }
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public String getProject() {
-        return project;
-    }
-
-    public void setProject(String project) {
-        this.project = project;
-    }
-
-    public String getFlow() {
-        return flow;
-    }
-
-    public void setFlow(String flow) {
-        this.flow = flow;
-    }
-
-    public String[] getDisabled() {
-        return disabled;
-    }
-
-    public void setDisabled(String[] disabled) {
-        this.disabled = disabled;
-    }
-
-    public String getSuccessEmails() {
-        return successEmails;
-    }
-
-    public void setSuccessEmails(String successEmails) {
-        this.successEmails = successEmails;
-    }
-
-    public String getFailureEmails() {
-        return failureEmails;
-    }
-
-    public void setFailureEmails(String failureEmails) {
-        this.failureEmails = failureEmails;
-    }
-
-    public String getSuccessEmailsOverride() {
-        return successEmailsOverride;
-    }
-
-    public void setSuccessEmailsOverride(String successEmailsOverride) {
-        this.successEmailsOverride = successEmailsOverride;
-    }
-
-    public String getFailureEmailsOverride() {
-        return failureEmailsOverride;
-    }
-
-    public void setFailureEmailsOverride(String failureEmailsOverride) {
-        this.failureEmailsOverride = failureEmailsOverride;
-    }
-
-    public String getNotifyFailureFirst() {
-        return notifyFailureFirst;
-    }
-
-    public void setNotifyFailureFirst(String notifyFailureFirst) {
-        this.notifyFailureFirst = notifyFailureFirst;
-    }
-
-    public String getNotifyFailureLast() {
-        return notifyFailureLast;
-    }
-
-    public void setNotifyFailureLast(String notifyFailureLast) {
-        this.notifyFailureLast = notifyFailureLast;
-    }
-
-    public String getFailureAction() {
-        return failureAction;
-    }
-
-    public void setFailureAction(String failureAction) {
-        this.failureAction = failureAction;
-    }
-
-    public String getConcurrentOption() {
-        return concurrentOption;
-    }
-
-    public void setConcurrentOption(String concurrentOption) {
-        this.concurrentOption = concurrentOption;
-    }
-
-    public Map<String, Object> getFlowOverride() {
-        return flowOverride;
-    }
-
-    public void setFlowOverride(Map<String, Object> flowOverride) {
-        this.flowOverride = flowOverride;
-    }
 }

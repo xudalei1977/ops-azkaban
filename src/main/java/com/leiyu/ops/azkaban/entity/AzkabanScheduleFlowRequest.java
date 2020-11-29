@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * An entity on Azkaban scheduler flow request
+ * Reference - https://azkaban.github.io/azkaban/docs/latest/#api-flexible-schedule
  *
  * @auther Pitt
  * @date 2020-11-27

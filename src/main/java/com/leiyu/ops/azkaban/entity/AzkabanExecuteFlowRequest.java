@@ -15,6 +15,7 @@ import java.util.Map;
 
 /**
  * An entity on Azkaban execution flow request
+ * Reference - https://azkaban.github.io/azkaban/docs/latest/#api-execute-a-flow
  *
  * @auther Pitt
  * @date 2020-03-14
@@ -42,7 +43,7 @@ public class AzkabanExecuteFlowRequest {
         List<BasicNameValuePair> pairs = new ArrayList();
         pairs.add(new BasicNameValuePair("ajax", this.ajax));
         pairs.add(new BasicNameValuePair("session.id", this.sessionId));
-        pairs.add(new BasicNameValuePair("projectName", this.project));
+        pairs.add(new BasicNameValuePair("project", this.project));
         pairs.add(new BasicNameValuePair("flow", this.flow));
 
         if (this.disabled != null && this.disabled.length > 0) {

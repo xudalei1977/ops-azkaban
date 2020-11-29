@@ -47,12 +47,13 @@ public class AzkabanController {
 		GeneralResult result = new GeneralResult();
 
 		try {
-			String exeuteMode = (String) paramMap.get("executeMode");
-            if (EXECUTE_MODE_ONCE.equalsIgnoreCase(exeuteMode)) {
-                result = azkabanService.executeAzkabanFlow(projectName, flowName, paramMap);
-            } else {
+			String executeMode = (String) paramMap.get("executeMode");
+            if (EXECUTE_MODE_CRON.equalsIgnoreCase(executeMode)) {
                 String cron = (String) paramMap.get("cron");
                 result = azkabanService.scheduleAzkabanCronFlow(projectName, flowName, cron);
+            } else {
+                // Default is execute at once - that means "executeMode" key-value is optional for "once" mode
+                result = azkabanService.executeAzkabanFlow(projectName, flowName, paramMap);
             }
 			result.success();
 		} catch (_400CommonException e1) {

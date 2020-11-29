@@ -6,7 +6,7 @@
     </appender>
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FOLDER}/ops-persona.log</fileNamePattern>
+            <fileNamePattern>${LOG_FOLDER}/ops-azkaban.log</fileNamePattern>
             <maxHistory>${LOG_MAX_HISTORY}</maxHistory>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -18,7 +18,7 @@
     </appender>
     <!--
         ASYNC_STDOUT -> STDOUT
-        ASYNC_FILE -> FILE ( ops-persona.log )
+        ASYNC_FILE -> FILE ( ops-azkaban.log )
     -->
     <appender name="ASYNC_STDOUT" class="ch.qos.logback.classic.AsyncAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">

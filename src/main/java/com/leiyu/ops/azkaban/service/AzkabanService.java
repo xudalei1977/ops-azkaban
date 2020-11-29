@@ -90,8 +90,15 @@ public class AzkabanService {
 
         String jsonString = HttpUtils.doGet(azkabanConfig.getAzkUrl(), request.parse());
 
-        AzkabanExecuteFlowResponse azkabanExecuteFlowResponse =
-                JSON.parseObject(jsonString, AzkabanExecuteFlowResponse.class);
+        AzkabanExecuteFlowResponse azkabanExecuteFlowResponse;
+        try {
+            azkabanExecuteFlowResponse = JSON.parseObject(jsonString, AzkabanExecuteFlowResponse.class);
+        } catch (Exception e) {
+            azkabanExecuteFlowResponse = new AzkabanExecuteFlowResponse();
+            azkabanExecuteFlowResponse.setProject(request.getProject());
+            azkabanExecuteFlowResponse.setFlow(request.getFlow());
+            azkabanExecuteFlowResponse.setError(jsonString);
+        }
 
         return azkabanExecuteFlowResponse;
     }
@@ -139,8 +146,13 @@ public class AzkabanService {
 
         String jsonString = HttpUtils.doGet(azkabanConfig.getAzkUrl(), request.parse());
 
-        AzkabanScheduleFlowResponse azkabanScheduleFlowResponse =
-                JSON.parseObject(jsonString, AzkabanScheduleFlowResponse.class);
+        AzkabanScheduleFlowResponse azkabanScheduleFlowResponse;
+        try {
+            azkabanScheduleFlowResponse = JSON.parseObject(jsonString, AzkabanScheduleFlowResponse.class);
+        } catch (Exception e) {
+            azkabanScheduleFlowResponse = new AzkabanScheduleFlowResponse();
+            azkabanScheduleFlowResponse.setError(jsonString);
+        }
 
         return azkabanScheduleFlowResponse;
     }
@@ -183,7 +195,7 @@ public class AzkabanService {
         return generalResult;
     }
 
-    // - - - Following methods are for test - - -
+    // - - - Following methods are for test - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -- - - - - -
 
     private static RestTemplate getRestTemplateForMain() {
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
@@ -230,20 +242,27 @@ public class AzkabanService {
         String jsonString = HttpUtils.doGet(azkUrl, request.parse());
         //getRestTemplateForMain().getForObject()
 
-        AzkabanExecuteFlowResponse azkabanExecuteFlowResponse =
-                JSON.parseObject(jsonString,AzkabanExecuteFlowResponse.class);
+        AzkabanExecuteFlowResponse azkabanExecuteFlowResponse;
+        try {
+            azkabanExecuteFlowResponse = JSON.parseObject(jsonString, AzkabanExecuteFlowResponse.class);
+        } catch (Exception e) {
+            azkabanExecuteFlowResponse = new AzkabanExecuteFlowResponse();
+            azkabanExecuteFlowResponse.setProject(request.getProject());
+            azkabanExecuteFlowResponse.setFlow(request.getFlow());
+            azkabanExecuteFlowResponse.setError(jsonString);
+        }
 
         return azkabanExecuteFlowResponse;
     }
 
-    public GeneralResult executeAzkabanFlowForMain(String projectName, String flowName, Map<String, Object> paramMap) {
+    public GeneralResult executeAzkabanFlowForMain(String project, String flow, Map<String, Object> paramMap) {
 
         GeneralResult generalResult = new GeneralResult();
 
         AzkabanExecuteFlowRequest request = new AzkabanExecuteFlowRequest();
         request.setFlowOverride(paramMap);
-        request.setProject(projectName);
-        request.setFlow(flowName);
+        request.setProject(project);
+        request.setFlow(flow);
         request.setSessionId(loginForMain());
         request.setConcurrentOption("ignore");
         // Added
@@ -270,8 +289,13 @@ public class AzkabanService {
 
         String jsonString = HttpUtils.doGet(azkUrl, request.parse());
 
-        AzkabanScheduleFlowResponse azkabanScheduleFlowResponse =
-                JSON.parseObject(jsonString, AzkabanScheduleFlowResponse.class);
+        AzkabanScheduleFlowResponse azkabanScheduleFlowResponse;
+        try {
+            azkabanScheduleFlowResponse = JSON.parseObject(jsonString, AzkabanScheduleFlowResponse.class);
+        } catch (Exception e) {
+            azkabanScheduleFlowResponse = new AzkabanScheduleFlowResponse();
+            azkabanScheduleFlowResponse.setError(jsonString);
+        }
 
         return azkabanScheduleFlowResponse;
     }
@@ -300,12 +324,15 @@ public class AzkabanService {
     }
 
     public static void main(String[] args) {
-        String projectName = "Pitt_Test";
-        String flowName = "two";
+        //String projectName = "Pitt_Test";
+        //String flowName = "two";
+        String projectName = "Persona";
+        String flowName = "update";
         Map<String, Object> paramMap = Maps.newHashMap();
         // An expression to create a trigger that simply fires every 1 minute
-        String cron = "0 0/1 * * * ?";
-        //paramMap.put("batchNo", batchNo);
+        //String cron = "0 0/1 * * * ?";
+        String batchNo = "BASIC_TAG202011290001";
+        paramMap.put("batchNo", batchNo);
 
         log.info("AzkabanService:: main(): started, " +
                         "projectName={}, flowName={}, paramMap={}",
@@ -314,8 +341,8 @@ public class AzkabanService {
         GeneralResult result = new GeneralResult();
 
         try {
-            //result = new AzkabanService().executeAzkabanFlowForMain(projectName, flowName, paramMap);
-            result = new AzkabanService().scheduleAzkabanCronFlowForMain(projectName, flowName, cron);
+            result = new AzkabanService().executeAzkabanFlowForMain(projectName, flowName, paramMap);
+            //result = new AzkabanService().scheduleAzkabanCronFlowForMain(projectName, flowName, cron);
             result.success();
         } catch (_400CommonException e1) {
             log.error("AzkabanService:: main(): failed, " +
